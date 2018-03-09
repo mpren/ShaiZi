@@ -15,13 +15,13 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+//    @Autowired
+//    private RedisTemplate redisTemplate;
 
     @PostMapping("/add")
     public void insert(Student student) {
         //WARN:因为我们在初始化RedisTemplate的时候使用了指定的序列化器，这里要注意。
-        redisTemplate.opsForSet().add(String.valueOf(student.getId()), student);
+//        redisTemplate.opsForSet().add(String.valueOf(student.getId()), student);
         studentService.insert(student);
     }
 }

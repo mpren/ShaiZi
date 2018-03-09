@@ -4,15 +4,15 @@
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://99.48.236.181:3306/shaizi
+#    url: jdbc:mysql://localhost:3306/shaizi?useSSL=false
 #    username: rtrc
 #    password: 2wsx#EDC
 
-spring:
-  redis:
-    host: 99.48.236.74
-    port: 6439
-    password: 123456
+#spring:
+#  redis:
+#    host: 127.0.0.1
+#    port: 6439
+#    password: 123456
 mybatis:
   typeAliasesPackage: com.test.sz.model
   mapperLocations: classpath:mapper/*.xml

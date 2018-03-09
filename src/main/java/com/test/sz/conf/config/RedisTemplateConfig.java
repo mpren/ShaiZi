@@ -8,18 +8,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-@Configuration
+//@Configuration
 public class RedisTemplateConfig {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Bean
-    public RedisTemplate redisTemplateInit() {
-        //设置序列化Key的序列化器
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        //设置序列化Value的序列化器
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        return redisTemplate;
-    }
+//    @Autowired
+//    private RedisTemplate redisTemplate;
+//
+//    @Bean
+//    public RedisTemplate redisTemplateInit() {
+//        //设置序列化Key的序列化器
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        //设置序列化Value的序列化器
+//        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+//        return redisTemplate;
+//    }
 }
