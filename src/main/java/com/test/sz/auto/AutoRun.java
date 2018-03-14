@@ -1,7 +1,9 @@
 package com.test.sz.auto;
 
 import com.test.sz.model.TSInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.SmartLifecycle;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -20,6 +22,9 @@ public class AutoRun implements SmartLifecycle {
     private static List<TSInfo> list = new ArrayList<>();
 
     private static final String STOCK_PATH = "http://qt.gtimg.cn/q=";
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     public void autoRun() {
         dealFile();
@@ -42,7 +47,7 @@ public class AutoRun implements SmartLifecycle {
                     if (line.contains("pv_none_match")) {
                         continue;
                     }
-                    String info = null;
+                    String info;
                     if (line.substring(0, 20).contains("51~")) {
                         info = line.substring(15);
                     } else {
@@ -134,7 +139,7 @@ public class AutoRun implements SmartLifecycle {
                                 s.setZhangTingJia(BigDecimal.valueOf(Float.valueOf(str[46])));
                             if (null != str[47] && !"".equals(str[47]))
                                 s.setDieTingJia(BigDecimal.valueOf(Float.valueOf(str[47])));
-
+                            redisTemplate.opsForSet().add(s.getStockCode(), s);
                         }
                     }
                 }
@@ -153,9 +158,9 @@ public class AutoRun implements SmartLifecycle {
     private void dealFile() {
         try {
             File file = ResourceUtils.getFile("classpath:codes.txt");
-            BufferedReader br = null;
+            BufferedReader br;
             br = new BufferedReader(new FileReader(file));
-            String instring = null;
+            String instring;
             while ((instring = br.readLine()) != null) {
                 TSInfo stock = new TSInfo();
                 if ("6".endsWith(instring.substring(0, 1))) {
