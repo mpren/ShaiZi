@@ -1,5 +1,6 @@
 package com.test.sz.auto;
 
+import com.alibaba.fastjson.JSON;
 import com.test.sz.model.TSInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.SmartLifecycle;
@@ -9,15 +10,13 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AutoRun implements SmartLifecycle {
+public class InitDataLifecycle implements SmartLifecycle {
 
     private static List<TSInfo> list = new ArrayList<>();
 
@@ -26,20 +25,15 @@ public class AutoRun implements SmartLifecycle {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public void autoRun() {
+    public void init() {
         dealFile();
-        BufferedReader reader = null;
-        URL ur = null;
-        List<TSInfo> insertStock = new ArrayList<>();
-        List<TSInfo> updateStock = new ArrayList<>();
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        BufferedReader reader;
+        URL ur;
         StringBuffer sb = new StringBuffer();
 
         try {
-            for (TSInfo s1 : list) {
-                ur = new URL(STOCK_PATH + s1.getStockCode());
-                @SuppressWarnings("unused")
-                HttpURLConnection uc = (HttpURLConnection) ur.openConnection();
+            for (TSInfo s : list) {
+                ur = new URL(STOCK_PATH + s.getStockCode());
                 reader = new BufferedReader(new InputStreamReader(
                         ur.openStream(), "GBK"));
                 String line;
@@ -56,11 +50,9 @@ public class AutoRun implements SmartLifecycle {
                     String[] str = info.split("~");
                     if (str.length > 5) {
                         if (!"0.00".equals(Float.valueOf(str[3]))) {
-                            TSInfo s = new TSInfo();
                             s.setDealedDate(str[29].substring(0, 8));
                             s.setDetailTime(str[29]);
                             s.setStockName(str[0]);
-                            s.setStockCode(s1.getStockCode());
                             sb.append(str[1].substring(3) + " " + Float.valueOf(str[31]) + "   ");
                             s.setTodayPrice(BigDecimal.valueOf(Float
                                     .valueOf(str[2])));
@@ -139,7 +131,8 @@ public class AutoRun implements SmartLifecycle {
                                 s.setZhangTingJia(BigDecimal.valueOf(Float.valueOf(str[46])));
                             if (null != str[47] && !"".equals(str[47]))
                                 s.setDieTingJia(BigDecimal.valueOf(Float.valueOf(str[47])));
-                            redisTemplate.opsForSet().add(s.getStockCode(), s);
+
+                            redisTemplate.convertAndSend("sInfo", JSON.toJSONString(s));
                         }
                     }
                 }
@@ -203,7 +196,7 @@ public class AutoRun implements SmartLifecycle {
 
     @Override
     public void start() {
-        autoRun();
+        init();
     }
 
     @Override

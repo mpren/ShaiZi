@@ -1,12 +1,13 @@
 package com.test.sz.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class TSInfo {
-	
-	private static final long serialVersionUID = -4089678289591260155L;
+public class TSInfo implements Serializable {
 
-	private String stockCode;
+    private static final long serialVersionUID = -4089678289591260155L;
+
+    private String stockCode;
 
     private String stockName;
 
@@ -89,7 +90,7 @@ public class TSInfo {
     private BigDecimal zhangTingJia;
 
     private BigDecimal dieTingJia;
-    
+
     private String detailTime;
 
     public String getStockCode() {
@@ -428,12 +429,12 @@ public class TSInfo {
         this.dieTingJia = dieTingJia;
     }
 
-	public String getDetailTime() {
-		return detailTime;
-	}
+    public String getDetailTime() {
+        return detailTime;
+    }
 
-	public void setDetailTime(String detailTime) {
-		this.detailTime = detailTime;
-	}
+    public void setDetailTime(String detailTime) {
+        this.detailTime = detailTime;
+    }
 
 }
