@@ -150,7 +150,7 @@ public class InitDataLifecycle implements SmartLifecycle {
 
     private void dealFile() {
         try {
-            File file = ResourceUtils.getFile("classpath:codes.txt");
+            File file = ResourceUtils.getFile("classpath:codes");
             BufferedReader br;
             br = new BufferedReader(new FileReader(file));
             String instring;
