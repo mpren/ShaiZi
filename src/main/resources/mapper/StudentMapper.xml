@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.test.sz.dao.StudentDao">
-    <resultMap id="BaseResultMap" type="com.test.sz.model.Student">
+<mapper namespace="com.mpren.sz.dao.StudentDao">
+    <resultMap id="BaseResultMap" type="com.mpren.sz.model.Student">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
     </resultMap>
@@ -9,7 +9,7 @@
         id
     </sql>
 
-    <insert id="insert" parameterType="com.test.sz.model.Student">
+    <insert id="insert" parameterType="com.mpren.sz.model.Student">
         insert into student (id, user_name)
         values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR})
     </insert>
