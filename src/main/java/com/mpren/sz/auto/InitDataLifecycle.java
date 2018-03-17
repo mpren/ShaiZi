@@ -153,7 +153,7 @@ public class InitDataLifecycle implements SmartLifecycle {
                             if (null != str[47] && !"".equals(str[47]))
                                 s.setDieTingJia(BigDecimal.valueOf(Float.valueOf(str[47])));
 
-                            //系统设计规划使用kafka streams流式计算，但鉴于kafka比较重，当前使用Redis替代订阅发布。
+                            //系统设计规划使用kafka streams流式计算，但鉴于kafka比较重，当前使用Redis替代source/sink。
                             redisTemplate.convertAndSend("tsInfo", JSON.toJSONString(s));
                         }
                     }
