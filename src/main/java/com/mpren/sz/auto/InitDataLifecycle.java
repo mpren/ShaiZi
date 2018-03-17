@@ -2,6 +2,8 @@ package com.mpren.sz.auto;
 
 import com.alibaba.fastjson.JSON;
 import com.mpren.sz.model.TSInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,47 +16,58 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
+/**
+ * Bean初始化完成开始计算
+ */
 @Component
 public class InitDataLifecycle implements SmartLifecycle {
 
-    private static List<TSInfo> list = new ArrayList<>();
+    private final static Logger logger = LoggerFactory.getLogger(InitDataLifecycle.class);
 
     private static final String STOCK_PATH = "http://qt.gtimg.cn/q=";
 
+    private final RedisTemplate redisTemplate;
+
     @Autowired
-    private RedisTemplate redisTemplate;
+    public InitDataLifecycle(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
-    public void init() {
-        dealFile();
-        BufferedReader reader;
-        URL ur;
-        StringBuffer sb = new StringBuffer();
+    private void init() {
+        List<TSInfo> tsInfoList = dealFile();
+        final BufferedReader[] reader = new BufferedReader[1];
+        final URL[] ur = new URL[1];
 
-        try {
-            for (TSInfo s : list) {
-                ur = new URL(STOCK_PATH + s.getStockCode());
-                reader = new BufferedReader(new InputStreamReader(
-                        ur.openStream(), "GBK"));
+        tsInfoList.forEach(s -> {
+            try {
+                ur[0] = new URL(STOCK_PATH + s.getStockCode());
+                reader[0] = new BufferedReader(new InputStreamReader(
+                        ur[0].openStream(), "GBK"));
                 String line;
-                while ((line = reader.readLine()) != null) {
+
+                while ((line = reader[0].readLine()) != null) {
+
                     if (line.contains("pv_none_match")) {
                         continue;
                     }
+
                     String info;
+
                     if (line.substring(0, 20).contains("51~")) {
                         info = line.substring(15);
                     } else {
                         info = line.substring(14);
                     }
+
                     String[] str = info.split("~");
+
                     if (str.length > 5) {
-                        if (!"0.00".equals(Float.valueOf(str[3]))) {
+
+                        if (!"0.00".equals(str[3])) {
                             s.setDealedDate(str[29].substring(0, 8));
                             s.setDetailTime(str[29]);
                             s.setStockName(str[0]);
-                            sb.append(str[1].substring(3) + " " + Float.valueOf(str[31]) + "   ");
                             s.setTodayPrice(BigDecimal.valueOf(Float
                                     .valueOf(str[2])));
                             s.setYesterdayPrice(BigDecimal.valueOf(Float
@@ -116,74 +129,76 @@ public class InitDataLifecycle implements SmartLifecycle {
                                     .valueOf(str[33])));
                             s.setZuiGao(BigDecimal.valueOf(Float
                                     .valueOf(str[32])));
+
                             if (null != str[37] && !"".equals(str[37])) {
                                 s.setHuanShouLv(BigDecimal.valueOf(Float
                                         .valueOf(str[37])));
                             }
+
                             s.setZhenFu(BigDecimal.valueOf(Float
                                     .valueOf(str[42])));
+
                             if (null != str[43] && !"".equals(str[43]))
                                 s.setLiuTongShiZhi(BigDecimal.valueOf(Float.valueOf(str[43])));
+
                             if (null != str[44] && !"".equals(str[44]))
                                 s.setTotalShiZhi(BigDecimal.valueOf(Float.valueOf(str[44])));
+
                             if (null != str[45] && !"".equals(str[45]))
                                 s.setShiJinLv(BigDecimal.valueOf(Float.valueOf(str[45])));
+
                             if (null != str[46] && !"".equals(str[46]))
                                 s.setZhangTingJia(BigDecimal.valueOf(Float.valueOf(str[46])));
+
                             if (null != str[47] && !"".equals(str[47]))
                                 s.setDieTingJia(BigDecimal.valueOf(Float.valueOf(str[47])));
 
-                            redisTemplate.convertAndSend("sInfo", JSON.toJSONString(s));
+                            //系统设计规划使用kafka streams流式计算，但鉴于kafka比较重，当前使用Redis替代订阅发布。
+                            redisTemplate.convertAndSend("tsInfo", JSON.toJSONString(s));
                         }
                     }
                 }
+            } catch (MalformedURLException e) {
+                logger.error("MalformedURLException :", e);
+            } catch (IOException e) {
+                logger.error("IOException :", e);
+            } catch (Exception e) {
+                logger.error("Exception :", e);
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        });
 
-        }
+        logger.trace("init complete !!!");
     }
 
-    private void dealFile() {
+    private List<TSInfo> dealFile() {
+        List<TSInfo> codeList = new ArrayList<>();
         try {
             File file = ResourceUtils.getFile("classpath:codes");
             BufferedReader br;
             br = new BufferedReader(new FileReader(file));
-            String instring;
-            while ((instring = br.readLine()) != null) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
                 TSInfo stock = new TSInfo();
-                if ("6".endsWith(instring.substring(0, 1))) {
-                    stock.setStockCode("sh" + instring);
-                    list.add(stock);
+                if ("6".endsWith(line.substring(0, 1))) {
+                    stock.setStockCode("sh" + line);
+                    codeList.add(stock);
                 } else {
-                    stock.setStockCode("sz" + instring);
-                    list.add(stock);
+                    stock.setStockCode("sz" + line);
+                    codeList.add(stock);
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("FileNotFoundException :", e);
         } catch (Exception e) {
-            System.out.println(e);
+            logger.error("Exception :", e);
         } finally {
             TSInfo stock = new TSInfo();
             stock.setStockCode("sh000001");
-            list.add(stock);
+            codeList.add(stock);
         }
+        return codeList;
     }
-
-    static String[] header = {"0名称", "1代码 ", "2当前价格 ", "3昨收  ", "4今开",
-            "5成交量（手）  ", "6外盘 ", "7内盘 ", "8买一  ", "9买一量（手）", "10买二", "11卖二量",
-            "12买三  ", "13买三量（手）", "14买四", "15买四量（手） ", "16买五  ", "17买五量（手）",
-            "18卖一 ", "19卖一量（手）  ", "20卖二", "21卖二量", "22卖三", "23卖三量（手）", "24卖四",
-            "25卖四量（手） ", "26卖五", "27卖五量（手）", "28最近逐笔成交", "29时间", "30涨跌",
-            "31涨跌%", "32最高", "33最低", "34价格/成交量（手）/成交额  ", "35成交量（手）",
-            "36成交额（万）", "37换手率", "38市盈率", "39", "40最高  ", "41最低", "42振幅 ",
-            "43流通市值", "44总市值", "45市净率", "46涨停价", "47跌停价", "48空"};
 
     @Override
     public boolean isAutoStartup() {
