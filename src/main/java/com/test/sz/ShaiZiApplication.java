@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author z673936
+ * @author paxos
  */
 @SpringBootApplication
 public class ShaiZiApplication {

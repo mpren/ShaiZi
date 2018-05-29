@@ -23,7 +23,7 @@ import static com.test.sz.constant.InfoConstant.FILE;
 import static com.test.sz.constant.InfoConstant.VALUE;
 
 /**
- * @author z673936
+ * @author paxos
  */
 @Component
 public class StreamProcessBusinessImpl implements StreamProcessBusiness {

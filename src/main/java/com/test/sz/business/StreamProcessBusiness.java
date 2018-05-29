@@ -1,7 +1,7 @@
 package com.test.sz.business;
 
 /**
- * @author z673936
+ * @author paxos
  */
 public interface StreamProcessBusiness {
     void beginStreamProcess();

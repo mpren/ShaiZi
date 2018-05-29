@@ -5,7 +5,7 @@ import com.test.sz.model.TSInfo;
 import java.util.List;
 
 /**
- * @author z673936
+ * @author paxos
  */
 public interface TSInfoDao {
     /**
