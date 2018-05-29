@@ -46,9 +46,9 @@
         <result column="DIE_TING_JIA" property="dieTingJia" jdbcType="DECIMAL"/>
     </resultMap>
 
-    <select id="queryDetail" resultMap="BaseResultMap"
+    <select id="queryInfoDetail" resultMap="BaseResultMap"
             parameterType="com.test.sz.model.TSInfo">
-        select * from T_STOCK_INFO where 1=1
+        select * from T_S_INFO where 1=1
         <if test="stockCode != null">
             AND STOCK_CODE = #{stockCode,jdbcType=VARCHAR}
         </if>
