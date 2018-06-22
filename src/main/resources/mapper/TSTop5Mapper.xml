@@ -3,66 +3,27 @@
 <mapper namespace="com.test.sz.dao.TSTop5Dao">
     <resultMap id="BaseResultMap"
                type="com.test.sz.model.TSTop5">
-        <result column="STOCK_CODE" jdbcType="VARCHAR" property="stockCode" />
-        <result column="CONTINUE_DAYS" jdbcType="VARCHAR" property="continueDays" />
-        <result column="DIE_FU" jdbcType="DECIMAL" property="dieFu" />
-        <result column="NEXT_DAY_DIE_FU" jdbcType="DECIMAL" property="nextDayDieFu" />
-        <result column="STATISTIC_DATE" jdbcType="VARCHAR" property="statisticDate" />
-        <result column="KAI_PAN" jdbcType="DECIMAL" property="kaiPan" />
-        <result column="STOCK_NAME" property="stockName" jdbcType="VARCHAR" />
-        <result column="ZUO_SHOU" jdbcType="DECIMAL" property="zuoShou" />
-        <result column="THE_WAY" jdbcType="VARCHAR" property="theWay" />
-        <result column="GAO_KAI" jdbcType="DECIMAL" property="gaoKai" />
-        <result column="KDJ" jdbcType="DECIMAL" property="kdj" />
-        <result column="TD_RATE" jdbcType="DECIMAL" property="tdRate" />
-        <result column="SELL_PRICE" jdbcType="DECIMAL" property="sellPrice" />
-        <result column="BUY_PRICE" jdbcType="DECIMAL" property="buyPrice" />
-        <result column="GAO_KAI_FROM" jdbcType="VARCHAR" property="gaoKaiFrom" />
-        <result column="GAO_KAI_TO" jdbcType="VARCHAR" property="gaoKaiTo" />
-        <result column="SD_FROM" jdbcType="VARCHAR" property="sdFrom" />
-        <result column="SD_TO" jdbcType="VARCHAR" property="sdTo" />
+        <result column="STOCK_CODE" jdbcType="VARCHAR" property="stockCode"/>
+        <result column="CONTINUE_DAYS" jdbcType="VARCHAR" property="continueDays"/>
+        <result column="DIE_FU" jdbcType="DECIMAL" property="dieFu"/>
+        <result column="NEXT_DAY_DIE_FU" jdbcType="DECIMAL" property="nextDayDieFu"/>
+        <result column="STATISTIC_DATE" jdbcType="VARCHAR" property="statisticDate"/>
+        <result column="KAI_PAN" jdbcType="DECIMAL" property="kaiPan"/>
+        <result column="STOCK_NAME" property="stockName" jdbcType="VARCHAR"/>
+        <result column="ZUO_SHOU" jdbcType="DECIMAL" property="zuoShou"/>
+        <result column="THE_WAY" jdbcType="VARCHAR" property="theWay"/>
+        <result column="GAO_KAI" jdbcType="DECIMAL" property="gaoKai"/>
+        <result column="KDJ" jdbcType="DECIMAL" property="kdj"/>
+        <result column="TD_RATE" jdbcType="DECIMAL" property="tdRate"/>
+        <result column="SELL_PRICE" jdbcType="DECIMAL" property="sellPrice"/>
+        <result column="BUY_PRICE" jdbcType="DECIMAL" property="buyPrice"/>
+        <result column="GAO_KAI_FROM" jdbcType="VARCHAR" property="gaoKaiFrom"/>
+        <result column="GAO_KAI_TO" jdbcType="VARCHAR" property="gaoKaiTo"/>
+        <result column="SD_FROM" jdbcType="VARCHAR" property="sdFrom"/>
+        <result column="SD_TO" jdbcType="VARCHAR" property="sdTo"/>
     </resultMap>
 
-    <resultMap id="SelectResultMap"
-               type="com.mpren.automation.deal.stock.domain.TStockSelected">
-        <result column="STOCK_CODE" jdbcType="VARCHAR" property="stockCode" />
-        <result column="CONTINUE_DAYS" jdbcType="VARCHAR" property="continueDays" />
-        <result column="DIE_FU" jdbcType="DECIMAL" property="dieFu" />
-        <result column="STATISTIC_DATE" jdbcType="VARCHAR" property="statisticDate" />
-        <result column="PERCENT_MAX" jdbcType="VARCHAR" property="percentMax" />
-        <result column="MAX_CJL" jdbcType="VARCHAR" property="maxCjl" />
-        <result column="NEI_PAN" jdbcType="DECIMAL" property="neiPan" />
-        <result column="WAI_PAN" jdbcType="VARCHAR" property="waiPan" />
-        <result column="COMPARE_PAN" jdbcType="VARCHAR" property="comparePan" />
-        <result column="AVG_MAX" jdbcType="VARCHAR" property="avgMax" />
-    </resultMap>
-
-    <resultMap id="ZhousiResultMap"
-               type="com.mpren.automation.deal.s.statistic.domain.TSzhousi">
-        <result column="DIE_FU" jdbcType="DECIMAL" property="dieFu" />
-        <result column="STATISTIC_DATE" jdbcType="VARCHAR" property="statisticDate" />
-        <result column="ZH_NAME" jdbcType="VARCHAR" property="zhName" />
-    </resultMap>
-
-    <resultMap id="ScatterPlotResultMap"
-               type="com.mpren.automation.deal.s.statistic.domain.TScatterPlot">
-        <result column="PRICE" jdbcType="DECIMAL" property="price" />
-        <result column="KDJ" jdbcType="DECIMAL" property="kdj" />
-        <result column="DIE_FU" jdbcType="DECIMAL" property="dieFu" />
-        <result column="ZHANG_FU" jdbcType="DECIMAL" property="zhangFu" />
-        <result column="TYPE" jdbcType="VARCHAR" property="type" />
-        <result column="GAO_KAI" jdbcType="DECIMAL" property="gaoKai" />
-    </resultMap>
-
-    <resultMap id="ZhangNumResultMap"
-               type="com.mpren.automation.deal.s.statistic.domain.TSzhangnum">
-        <result column="ZHANG_NUM" jdbcType="DECIMAL" property="zhangNum" />
-        <result column="STATISTIC_DATE" jdbcType="VARCHAR" property="statisticDate" />
-        <result column="SZ_CJL" jdbcType="VARCHAR" property="szCjl" />
-        <result column="TOTAL_NUM" jdbcType="VARCHAR" property="totalNum" />
-    </resultMap>
-
-    <insert id="insert" parameterType="com.mpren.automation.deal.stock.domain.TStockTop3">
+    <insert id="insert" parameterType="com.test.sz.model.TSTop5">
         insert into T_STOCK_TOP3 (STOCK_CODE, CONTINUE_DAYS, DIE_FU,
         NEXT_DAY_DIE_FU, STATISTIC_DATE, KAI_PAN,STOCK_NAME,ZUO_SHOU,THE_WAY
         )
@@ -72,7 +33,7 @@
         #{stockName,jdbcType=DECIMAL},#{zuoShou,jdbcType=VARCHAR},#{theWay,jdbcType=VARCHAR}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.mpren.automation.deal.stock.domain.TStockTop3">
+    <insert id="insertSelective" parameterType="com.test.sz.model.TSTop5">
         insert into T_STOCK_TOP3
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="stockCode != null">
@@ -115,8 +76,8 @@
             </if>
         </trim>
     </insert>
-    <select id="queryTop5Over" resultMap="BaseResultMap"
-            parameterType="com.mpren.automation.deal.stock.domain.TStockTop3">
+    <select id="queryTop5" resultMap="BaseResultMap"
+            parameterType="com.test.sz.model.TSTop5">
         select *
         from (with tt as (SELECT t.stock_code,
         count(*) as CONTINUE_DAYS,

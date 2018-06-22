@@ -1,4 +1,10 @@
 package com.test.sz.dao;
 
-public class TSDateDao {
+import com.test.sz.model.TSDate;
+
+/**
+ * @author paxos
+ */
+public interface TSDateDao {
+    void insert(TSDate date);
 }
