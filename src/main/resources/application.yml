@@ -1,13 +1,6 @@
 ########################################################
 ##   与application.properties效果一致，写法不一样
 ########################################################
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://99.48.236.181:3306/shaizi
-#    username: rtrc
-#    password: 2wsx#EDC
-
 spring:
   redis:
     host: 99.48.236.74
