@@ -1,6 +1,8 @@
 package com.test.sz.service;
 
+import com.test.sz.model.TSDate;
 import com.test.sz.model.TSInfo;
+import com.test.sz.model.TSTop5;
 
 import java.util.List;
 
@@ -22,4 +24,36 @@ public interface StreamProcessService {
      * @param info
      */
     void insertByList(List<TSInfo> info);
+
+    /**
+     * 查询日期
+     *
+     * @param date
+     * @return
+     */
+    TSDate queryDate(TSDate date);
+
+    /**
+     * 插入日期
+     *
+     * @param date
+     * @return
+     */
+    void insertDate(TSDate date);
+
+    /**
+     * 查询top5
+     *
+     * @param top5
+     * @return
+     */
+    TSDate queryTop5(TSTop5 top5);
+
+    /**
+     * 插入
+     *
+     * @param top5
+     * @return
+     */
+    void insertTop5(TSTop5 top5);
 }

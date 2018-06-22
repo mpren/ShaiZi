@@ -8,9 +8,12 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.test.sz.model.TSDate;
 import com.test.sz.model.TSInfo;
 import com.test.sz.service.StreamProcessService;
 import org.apache.commons.logging.Log;
@@ -80,8 +83,16 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
         //批量插入
         streamProcessService.insertByList(insertStock);
 
+        insertOrUpdateDate();
 
+    }
 
+    private void insertOrUpdateDate() {
+        TSDate tsDate = new TSDate();
+        tsDate.setMarket("ZH");
+        Date date = new Date();
+        tsDate.setDealDate(new SimpleDateFormat("yyyyMMdd").format(date));
+        streamProcessService.insertDate(tsDate);
     }
 
     private void buildInfo(List<TSInfo> insertStock, List<TSInfo> updateStock, StringBuffer sb, TSInfo s1,
