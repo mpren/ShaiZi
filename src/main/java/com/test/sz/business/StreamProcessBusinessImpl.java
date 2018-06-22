@@ -85,6 +85,11 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
 
         insertOrUpdateDate();
 
+        calTop5();
+    }
+
+    private void calTop5() {
+
     }
 
     private void insertOrUpdateDate() {

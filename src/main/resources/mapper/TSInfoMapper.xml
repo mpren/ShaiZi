@@ -74,51 +74,26 @@
         ZHANG_TING_JIA, DIE_TING_JIA)
         values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.stockCode,jdbcType=VARCHAR}, #{item.stockName,jdbcType=VARCHAR}, #{item.todayPrice,jdbcType=DECIMAL},
-            #{item.yesterdayPrice,jdbcType=DECIMAL}, #{item.dealedDate,jdbcType=VARCHAR}, #{item.jinKai,jdbcType=DECIMAL},
-            #{item.dealedCje,jdbcType=DECIMAL}, #{item.dealedCjl,jdbcType=DECIMAL}, #{item.totalShiZhi,jdbcType=DECIMAL},
+            (#{item.stockCode,jdbcType=VARCHAR}, #{item.stockName,jdbcType=VARCHAR},
+            #{item.todayPrice,jdbcType=DECIMAL},
+            #{item.yesterdayPrice,jdbcType=DECIMAL}, #{item.dealedDate,jdbcType=VARCHAR},
+            #{item.jinKai,jdbcType=DECIMAL},
+            #{item.dealedCje,jdbcType=DECIMAL}, #{item.dealedCjl,jdbcType=DECIMAL},
+            #{item.totalShiZhi,jdbcType=DECIMAL},
             #{item.liuTongShiZhi,jdbcType=DECIMAL}, #{item.waiPan,jdbcType=DECIMAL}, #{item.neiPan,jdbcType=DECIMAL},
-            #{item.buy1,jdbcType=DECIMAL}, #{item.buy2,jdbcType=DECIMAL}, #{item.buy3,jdbcType=DECIMAL}, #{item.buy4,jdbcType=DECIMAL},
+            #{item.buy1,jdbcType=DECIMAL}, #{item.buy2,jdbcType=DECIMAL}, #{item.buy3,jdbcType=DECIMAL},
+            #{item.buy4,jdbcType=DECIMAL},
             #{item.buy5,jdbcType=DECIMAL}, #{item.buy1Amount,jdbcType=DECIMAL}, #{item.buy2Amount,jdbcType=DECIMAL},
-            #{item.buy3Amount,jdbcType=DECIMAL}, #{item.buy4Amount,jdbcType=DECIMAL}, #{item.buy5Amount,jdbcType=DECIMAL},
+            #{item.buy3Amount,jdbcType=DECIMAL}, #{item.buy4Amount,jdbcType=DECIMAL},
+            #{item.buy5Amount,jdbcType=DECIMAL},
             #{item.sell1,jdbcType=DECIMAL}, #{item.sell2,jdbcType=DECIMAL}, #{item.sell3,jdbcType=DECIMAL},
             #{item.sell4,jdbcType=DECIMAL}, #{item.sell5,jdbcType=DECIMAL}, #{item.sell1Amount,jdbcType=DECIMAL},
-            #{item.sell2Amount,jdbcType=DECIMAL}, #{item.sell3Amount,jdbcType=DECIMAL}, #{item.sell4Amount,jdbcType=DECIMAL},
+            #{item.sell2Amount,jdbcType=DECIMAL}, #{item.sell3Amount,jdbcType=DECIMAL},
+            #{item.sell4Amount,jdbcType=DECIMAL},
             #{item.sell5Amount,jdbcType=DECIMAL}, #{item.zhangDie,jdbcType=DECIMAL}, #{item.zhangFuLv,jdbcType=DECIMAL},
             #{item.huanShouLv,jdbcType=DECIMAL}, #{item.shiYinLv,jdbcType=DECIMAL}, #{item.zuiGao,jdbcType=DECIMAL},
             #{item.zuiDi,jdbcType=DECIMAL}, #{item.zhenFu,jdbcType=DECIMAL}, #{item.shiJinLv,jdbcType=DECIMAL},
             #{item.zhangTingJia,jdbcType=DECIMAL}, #{item.dieTingJia,jdbcType=DECIMAL})
         </foreach>
-    </insert>
-
-    <insert id="insert" parameterType="com.test.sz.model.TSInfo">
-        insert into T_S_INFO (STOCK_CODE, STOCK_NAME, TODAY_PRICE,
-        YESTERDAY_PRICE, DEALED_DATE, JIN_KAI,
-        DEALED_CJE, DEALED_CJL, TOTAL_SHI_ZHI,
-        LIU_TONG_SHI_ZHI, WAI_PAN, NEI_PAN,
-        BUY1, BUY2, BUY3, BUY4,
-        BUY5, BUY1_AMOUNT, BUY2_AMOUNT,
-        BUY3_AMOUNT, BUY4_AMOUNT, BUY5_AMOUNT,
-        SELL1, SELL2, SELL3,
-        SELL4, SELL5, SELL1_AMOUNT,
-        SELL2_AMOUNT, SELL3_AMOUNT, SELL4_AMOUNT,
-        SELL5_AMOUNT, ZHANG_DIE, ZHANG_FU_LV,
-        HUAN_SHOU_LV, SHI_YIN_LV, ZUI_GAO,
-        ZUI_DI, ZHEN_FU, SHI_JIN_LV,
-        ZHANG_TING_JIA, DIE_TING_JIA)
-        values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{todayPrice,jdbcType=DECIMAL},
-        #{yesterdayPrice,jdbcType=DECIMAL}, #{dealedDate,jdbcType=VARCHAR}, #{jinKai,jdbcType=DECIMAL},
-        #{dealedCje,jdbcType=DECIMAL}, #{dealedCjl,jdbcType=DECIMAL}, #{totalShiZhi,jdbcType=DECIMAL},
-        #{liuTongShiZhi,jdbcType=DECIMAL}, #{waiPan,jdbcType=DECIMAL}, #{neiPan,jdbcType=DECIMAL},
-        #{buy1,jdbcType=DECIMAL}, #{buy2,jdbcType=DECIMAL}, #{buy3,jdbcType=DECIMAL}, #{buy4,jdbcType=DECIMAL},
-        #{buy5,jdbcType=DECIMAL}, #{buy1Amount,jdbcType=DECIMAL}, #{buy2Amount,jdbcType=DECIMAL},
-        #{buy3Amount,jdbcType=DECIMAL}, #{buy4Amount,jdbcType=DECIMAL}, #{buy5Amount,jdbcType=DECIMAL},
-        #{sell1,jdbcType=DECIMAL}, #{sell2,jdbcType=DECIMAL}, #{sell3,jdbcType=DECIMAL},
-        #{sell4,jdbcType=DECIMAL}, #{sell5,jdbcType=DECIMAL}, #{sell1Amount,jdbcType=DECIMAL},
-        #{sell2Amount,jdbcType=DECIMAL}, #{sell3Amount,jdbcType=DECIMAL}, #{sell4Amount,jdbcType=DECIMAL},
-        #{sell5Amount,jdbcType=DECIMAL}, #{zhangDie,jdbcType=DECIMAL}, #{zhangFuLv,jdbcType=DECIMAL},
-        #{huanShouLv,jdbcType=DECIMAL}, #{shiYinLv,jdbcType=DECIMAL}, #{zuiGao,jdbcType=DECIMAL},
-        #{zuiDi,jdbcType=DECIMAL}, #{zhenFu,jdbcType=DECIMAL}, #{shiJinLv,jdbcType=DECIMAL},
-        #{zhangTingJia,jdbcType=DECIMAL}, #{dieTingJia,jdbcType=DECIMAL})
     </insert>
 </mapper>
