@@ -77,7 +77,11 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
 
         }
 
+        //批量插入
         streamProcessService.insertByList(insertStock);
+
+
+
     }
 
     private void buildInfo(List<TSInfo> insertStock, List<TSInfo> updateStock, StringBuffer sb, TSInfo s1,
