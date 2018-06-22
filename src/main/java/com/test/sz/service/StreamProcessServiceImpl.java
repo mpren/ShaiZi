@@ -7,6 +7,7 @@ import com.test.sz.model.TSDate;
 import com.test.sz.model.TSInfo;
 import com.test.sz.model.TSTop5;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +33,7 @@ public class StreamProcessServiceImpl implements StreamProcessService {
     }
 
     @Override
+    @Transactional
     public void insertByList(List<TSInfo> info) {
         tSInfoDao.insertByList(info);
     }
@@ -42,6 +44,7 @@ public class StreamProcessServiceImpl implements StreamProcessService {
     }
 
     @Override
+    @Transactional
     public void insertDate(TSDate date) {
         tsDateDao.insert(date);
     }
@@ -52,6 +55,7 @@ public class StreamProcessServiceImpl implements StreamProcessService {
     }
 
     @Override
+    @Transactional
     public void insertTop5(TSTop5 top5) {
         tsTop5Dao.insert(top5);
     }

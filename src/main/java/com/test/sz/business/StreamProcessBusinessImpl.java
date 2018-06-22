@@ -76,8 +76,6 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
             LOGGER.error("", e);
         } catch (IOException e) {
             LOGGER.error("", e);
-        } finally {
-
         }
 
         //批量插入
