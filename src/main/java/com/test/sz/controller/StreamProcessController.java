@@ -17,7 +17,8 @@ public class StreamProcessController {
     private StreamProcessBusiness streamProcessBusiness;
 
     @GetMapping("/beginStreamProcess")
-    public void beginStreamProcess() {
+    public String beginStreamProcess() {
         streamProcessBusiness.beginStreamProcess();
+        return "执行成功！";
     }
 }

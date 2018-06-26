@@ -71,23 +71,23 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
                 }
             }
         } catch (UnsupportedEncodingException e) {
-            LOGGER.error("", e);
+            LOGGER.error("UnsupportedEncodingException exception:", e);
         } catch (MalformedURLException e) {
-            LOGGER.error("", e);
+            LOGGER.error("MalformedURLException exception:", e);
         } catch (IOException e) {
-            LOGGER.error("", e);
+            LOGGER.error("IOException exception:", e);
         }
 
         //批量插入
-        streamProcessService.insertByList(insertStock);
-
-        insertOrUpdateDate();
-
-        calTop5();
+        if (insertStock.size() > 0) {
+            streamProcessService.insertByList(insertStock);
+            insertOrUpdateDate();
+            calcTop5();
+        }
     }
 
-    private void calTop5() {
-
+    private void calcTop5() {
+        streamProcessService.insertTop5ByList(streamProcessService.calcTop5());
     }
 
     private void insertOrUpdateDate() {

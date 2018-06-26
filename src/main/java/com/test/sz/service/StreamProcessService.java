@@ -44,10 +44,10 @@ public interface StreamProcessService {
     /**
      * 查询top5
      *
-     * @param top5
+     * @param
      * @return
      */
-    TSDate queryTop5(TSTop5 top5);
+    List<TSTop5> calcTop5();
 
     /**
      * 插入
@@ -55,5 +55,5 @@ public interface StreamProcessService {
      * @param top5
      * @return
      */
-    void insertTop5(TSTop5 top5);
+    void insertTop5ByList(List<TSTop5> top5);
 }

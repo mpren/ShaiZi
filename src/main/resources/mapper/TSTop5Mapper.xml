@@ -22,19 +22,20 @@
         <result column="SD_FROM" jdbcType="VARCHAR" property="sdFrom"/>
         <result column="SD_TO" jdbcType="VARCHAR" property="sdTo"/>
     </resultMap>
-
     <insert id="insert" parameterType="com.test.sz.model.TSTop5">
-        insert into T_STOCK_TOP3 (STOCK_CODE, CONTINUE_DAYS, DIE_FU,
-        NEXT_DAY_DIE_FU, STATISTIC_DATE, KAI_PAN,STOCK_NAME,ZUO_SHOU,THE_WAY
-        )
-        values (#{stockCode,jdbcType=VARCHAR}, #{continueDays,jdbcType=VARCHAR},
-        #{dieFu,jdbcType=DECIMAL},
-        #{nextDayDieFu,jdbcType=DECIMAL}, #{statisticDate,jdbcType=VARCHAR}, #{kaiPan,jdbcType=DECIMAL},
-        #{stockName,jdbcType=DECIMAL},#{zuoShou,jdbcType=VARCHAR},#{theWay,jdbcType=VARCHAR}
-        )
+        insert into T_S_TOP5 (STOCK_CODE, CONTINUE_DAYS, DIE_FU,
+        NEXT_DAY_DIE_FU, STATISTIC_DATE, KAI_PAN,STOCK_NAME)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.stockCode,jdbcType=VARCHAR}, #{item.continueDays,jdbcType=VARCHAR},
+            #{item.dieFu,jdbcType=DECIMAL},
+            #{item.nextDayDieFu,jdbcType=DECIMAL}, #{item.statisticDate,jdbcType=VARCHAR},
+            #{item.kaiPan,jdbcType=DECIMAL},
+            #{item.stockName,jdbcType=VARCHAR})
+        </foreach>
     </insert>
     <insert id="insertSelective" parameterType="com.test.sz.model.TSTop5">
-        insert into T_STOCK_TOP3
+        insert into T_S_TOP5
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="stockCode != null">
                 STOCK_CODE,
@@ -76,37 +77,54 @@
             </if>
         </trim>
     </insert>
+    <select id="calcTop5" resultMap="BaseResultMap"
+            parameterType="com.test.sz.model.TSTop5">
+        SELECT
+        d.*, e.STOCK_NAME,
+        e.DEALED_DATE statistic_date
+        FROM
+        (
+        SELECT
+        c.stock_code,
+        count(c.num) continue_days,
+        sum(c.ZHANG_FU_LV) AS die_fu
+        FROM
+        (
+        SELECT
+        a.STOCK_CODE,
+        a.DEALED_DATE,
+        a.ZHANG_FU_LV,
+        a.ZHANG_FU_LV <![CDATA[ <  ]]> 0 AS num
+        FROM
+        T_S_INFO a
+        LEFT JOIN T_S_INFO b ON a.STOCK_CODE = b.STOCK_CODE
+        AND a.DEALED_DATE <![CDATA[ <  ]]> b.DEALED_DATE
+                            GROUP BY
+                            a.STOCK_CODE,
+        a.DEALED_DATE,
+        a.ZHANG_FU_LV
+        HAVING
+        count(b.STOCK_CODE) <![CDATA[ <=  ]]> 5
+        ORDER BY
+        a.STOCK_CODE,
+        a.DEALED_DATE DESC
+        ) c
+        GROUP BY
+        c.STOCK_CODE,
+        c.num
+        ORDER BY
+        continue_days DESC,
+        die_fu ASC
+        LIMIT 5
+        ) d
+        LEFT JOIN T_S_INFO e ON d.stock_code = e.STOCK_CODE
+        ORDER BY
+        e.DEALED_DATE DESC,
+        d.die_fu ASC
+        LIMIT 5
+    </select>
     <select id="queryTop5" resultMap="BaseResultMap"
             parameterType="com.test.sz.model.TSTop5">
-        select *
-        from (with tt as (SELECT t.stock_code,
-        count(*) as CONTINUE_DAYS,
-        sum(t.zhang_fu_lv) as die_fu
-        FROM T_STOCK_INFO t
-        where t.zhang_fu_lv <![CDATA[ <  ]]>
-        0
-        and t.dealed_date <![CDATA[ >=  ]]>
-        (select *
-        from (select *
-        from (select d.deal_date
-        from t_s_date d
-        order by d.date_id desc)
-        where ROWNUM <![CDATA[ <= ]]>
-        5
-        order by deal_date asc)
-        where ROWNUM <![CDATA[ <= ]]>
-        1)
-        group by t.stock_code, t.stock_name
-        order by CONTINUE_DAYS desc, die_fu asc)
-        select tt.*,
-        t.today_price as ZUO_SHOU,
-        to_char(sysdate, 'yyyyMMdd') as STATISTIC_DATE,
-        t.stock_name
-        from tt, T_STOCK_INFO t
-        where tt.stock_code = t.stock_code(+)
-        and to_char(sysdate, 'yyyyMMdd') = t.dealed_date
-        order by CONTINUE_DAYS desc, die_fu asc) ttt
-        where rownum <![CDATA[ <  ]]>
-        6
+        select * from t_s_top5
     </select>
 </mapper>

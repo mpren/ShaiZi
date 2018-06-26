@@ -50,13 +50,13 @@ public class StreamProcessServiceImpl implements StreamProcessService {
     }
 
     @Override
-    public TSDate queryTop5(TSTop5 top5) {
-        return null;
+    public List<TSTop5> calcTop5() {
+        return tsTop5Dao.calcTop5();
     }
 
     @Override
     @Transactional
-    public void insertTop5(TSTop5 top5) {
+    public void insertTop5ByList(List<TSTop5> top5) {
         tsTop5Dao.insert(top5);
     }
 
