@@ -15,5 +15,5 @@ public interface PortalService {
      * @param
      * @return
      */
-    List<TSTop5> queryTop5();
+    List<TSTop5> queryDieFuTop5();
 }

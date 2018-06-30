@@ -4,5 +4,5 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public interface PortalBusiness {
-    Map<String,BigDecimal> queryTop5();
+    Map<String,BigDecimal> queryDieFuTop5();
 }

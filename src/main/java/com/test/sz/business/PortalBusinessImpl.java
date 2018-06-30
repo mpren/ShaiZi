@@ -19,9 +19,9 @@ public class PortalBusinessImpl implements PortalBusiness {
     private PortalService portalService;
 
     @Override
-    public Map<String, BigDecimal> queryTop5() {
+    public Map<String, BigDecimal> queryDieFuTop5() {
         Map<String, BigDecimal> mapV = new HashMap<>();
-        List<TSTop5> top5List = portalService.queryTop5();
+        List<TSTop5> top5List = portalService.queryDieFuTop5();
         Map<String, List<TSTop5>> top5ListMap = top5List.stream().collect(Collectors.groupingBy(TSTop5::getStatisticDate));
         top5ListMap.forEach((k, v) ->
                 mapV.put(k, v.stream().map(TSTop5::getDieFu).reduce(BigDecimal.ZERO, BigDecimal::add))

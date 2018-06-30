@@ -11,7 +11,7 @@ public interface TSTop5Dao {
 
     void insert(List<TSTop5> top5);
 
-    List<TSTop5> calcTop5();
+    List<TSTop5> calcDieFuTop5();
 
     List<TSTop5> queryTop5();
 }

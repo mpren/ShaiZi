@@ -77,7 +77,7 @@
             </if>
         </trim>
     </insert>
-    <select id="calcTop5" resultMap="BaseResultMap"
+    <select id="calcDieFuTop5" resultMap="BaseResultMap"
             parameterType="com.test.sz.model.TSTop5">
         SELECT
         d.*, e.STOCK_NAME,

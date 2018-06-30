@@ -17,7 +17,7 @@ public class PortalServiceImpl implements PortalService {
     private TSTop5Dao tsTop5Dao;
 
     @Override
-    public List<TSTop5> queryTop5() {
-        return tsTop5Dao.queryTop5();
+    public List<TSTop5> queryDieFuTop5() {
+        return tsTop5Dao.calcDieFuTop5();
     }
 }

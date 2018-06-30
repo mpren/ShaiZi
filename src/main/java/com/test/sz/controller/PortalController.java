@@ -22,10 +22,10 @@ public class PortalController {
         return "index";
     }
 
-    @RequestMapping("queryTop5")
+    @RequestMapping("queryDieFuTop5")
     @ResponseBody
-    public String queryTop5() {
-        return JSON.toJSONString(portalBusiness.queryTop5());
+    public String queryDieFuTop5() {
+        return JSON.toJSONString(portalBusiness.queryDieFuTop5());
     }
 
 }
