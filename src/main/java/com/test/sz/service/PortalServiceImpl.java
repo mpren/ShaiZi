@@ -18,6 +18,6 @@ public class PortalServiceImpl implements PortalService {
 
     @Override
     public List<TSTop5> queryDieFuTop5() {
-        return tsTop5Dao.calcDieFuTop5();
+        return tsTop5Dao.queryDieFuTop5();
     }
 }

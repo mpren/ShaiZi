@@ -143,7 +143,7 @@
         d.die_fu ASC
         LIMIT 5
     </select>
-    <select id="queryTop5" resultMap="BaseResultMap"
+    <select id="queryDieFuTop5" resultMap="BaseResultMap"
             parameterType="com.test.sz.model.TSTop5">
         select * from t_s_top5
     </select>

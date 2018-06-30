@@ -51,7 +51,7 @@ public class StreamProcessServiceImpl implements StreamProcessService {
 
     @Override
     public List<TSTop5> calcTop5() {
-        return tsTop5Dao.calcTop5();
+        return tsTop5Dao.calcDieFuTop5();
     }
 
     @Override
