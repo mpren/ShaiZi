@@ -96,7 +96,27 @@
         a.ZHANG_FU_LV,
         a.ZHANG_FU_LV <![CDATA[ <  ]]> 0 AS num
         FROM
-        T_S_INFO a
+        (
+				SELECT
+					*
+				FROM
+					T_S_INFO x
+				WHERE
+					x.DEALED_DATE IN (
+						SELECT
+							Z.DEAL_DATE
+						FROM
+							(
+								SELECT
+									Y.DEAL_DATE
+								FROM
+									T_S_DATE Y
+								ORDER BY
+									Y.DEAL_DATE DESC
+								LIMIT 5
+							) AS Z
+					)
+			)  a
         LEFT JOIN T_S_INFO b ON a.STOCK_CODE = b.STOCK_CODE
         AND a.DEALED_DATE <![CDATA[ <  ]]> b.DEALED_DATE
                             GROUP BY
@@ -104,7 +124,7 @@
         a.DEALED_DATE,
         a.ZHANG_FU_LV
         HAVING
-        count(b.STOCK_CODE) <![CDATA[ <=  ]]> 5
+        count(b.DEALED_DATE) <![CDATA[ <=  ]]> 5
         ORDER BY
         a.STOCK_CODE,
         a.DEALED_DATE DESC
