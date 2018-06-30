@@ -7,3 +7,5 @@
 
 - 可以使用SqlLite无需安装数据库存储在resources目录下。
 
+- MYSQL 脚本在resource/sql下，自己添加索引。
+

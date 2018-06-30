@@ -45,6 +45,7 @@ CREATE TABLE T_S_INFO
   DETAIL_TIME      VARCHAR(20)
 );
 
+
 CREATE TABLE T_S_DATE
 (
   DATE_ID  int auto_increment primary key,
