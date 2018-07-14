@@ -6,7 +6,10 @@
 	<groupId>com.test</groupId>
 	<artifactId>ShaiZi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<modules>
+		<module>sz-web</module>
+	</modules>
+	<packaging>pom</packaging>
 
 	<name>ShaiZi</name>
 	<description>Demo project for Spring Boot</description>
