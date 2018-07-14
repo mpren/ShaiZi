@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,5 +28,12 @@ public class PortalBusinessImpl implements PortalBusiness {
                 mapV.put(k, v.stream().map(TSTop5::getDieFu).reduce(BigDecimal.ZERO, BigDecimal::add))
         );
         return mapV;
+    }
+
+    @Override
+    public List<TSTop5> queryTop5List() {
+        List<TSTop5> top5List = portalService.queryTop5List();
+        top5List.sort(Comparator.comparing(TSTop5::getStatisticDate));
+        return top5List;
     }
 }

@@ -28,4 +28,10 @@ public class PortalController {
         return JSON.toJSONString(portalBusiness.queryDieFuTop5());
     }
 
+    @RequestMapping("queryTop5List")
+    @ResponseBody
+    public String queryTop5() {
+        return JSON.toJSONString(portalBusiness.queryTop5List());
+    }
+
 }

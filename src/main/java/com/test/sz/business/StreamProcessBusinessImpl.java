@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import static com.test.sz.constant.InfoConstant.FILE;
-import static com.test.sz.constant.InfoConstant.VALUE;
+import static com.test.sz.constant.SZConstant.FILE;
+import static com.test.sz.constant.SZConstant.VALUE;
 
 /**
  * @author paxos
@@ -80,6 +80,7 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
 
         //批量插入
         if (insertStock.size() > 0) {
+            LOGGER.info("BUILD INFO SUCCESSFUL");
             streamProcessService.insertByList(insertStock);
             insertOrUpdateDate();
             calcTop5();
