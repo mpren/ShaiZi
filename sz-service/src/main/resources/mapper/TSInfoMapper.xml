@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.sz.TSInfoDao">
+    <resultMap id="BaseResultMap" type="com.test.sz.TSInfo">
+        <result column="STOCK_CODE" property="stockCode" jdbcType="VARCHAR"/>
+        <result column="STOCK_NAME" property="stockName" jdbcType="VARCHAR"/>
+        <result column="TODAY_PRICE" property="todayPrice" jdbcType="DECIMAL"/>
+        <result column="YESTERDAY_PRICE" property="yesterdayPrice" jdbcType="DECIMAL"/>
+        <result column="DEALED_DATE" property="dealedDate" jdbcType="VARCHAR"/>
+        <result column="JIN_KAI" property="jinKai" jdbcType="DECIMAL"/>
+        <result column="DEALED_CJE" property="dealedCje" jdbcType="DECIMAL"/>
+        <result column="DEALED_CJL" property="dealedCjl" jdbcType="DECIMAL"/>
+        <result column="TOTAL_SHI_ZHI" property="totalShiZhi" jdbcType="DECIMAL"/>
+        <result column="LIU_TONG_SHI_ZHI" property="liuTongShiZhi" jdbcType="DECIMAL"/>
+        <result column="WAI_PAN" property="waiPan" jdbcType="DECIMAL"/>
+        <result column="NEI_PAN" property="neiPan" jdbcType="DECIMAL"/>
+        <result column="BUY1" property="buy1" jdbcType="DECIMAL"/>
+        <result column="BUY2" property="buy2" jdbcType="DECIMAL"/>
+        <result column="BUY3" property="buy3" jdbcType="DECIMAL"/>
+        <result column="BUY4" property="buy4" jdbcType="DECIMAL"/>
+        <result column="BUY5" property="buy5" jdbcType="DECIMAL"/>
+        <result column="BUY1_AMOUNT" property="buy1Amount" jdbcType="DECIMAL"/>
+        <result column="BUY2_AMOUNT" property="buy2Amount" jdbcType="DECIMAL"/>
+        <result column="BUY3_AMOUNT" property="buy3Amount" jdbcType="DECIMAL"/>
+        <result column="BUY4_AMOUNT" property="buy4Amount" jdbcType="DECIMAL"/>
+        <result column="BUY5_AMOUNT" property="buy5Amount" jdbcType="DECIMAL"/>
+        <result column="SELL1" property="sell1" jdbcType="DECIMAL"/>
+        <result column="SELL2" property="sell2" jdbcType="DECIMAL"/>
+        <result column="SELL3" property="sell3" jdbcType="DECIMAL"/>
+        <result column="SELL4" property="sell4" jdbcType="DECIMAL"/>
+        <result column="SELL5" property="sell5" jdbcType="DECIMAL"/>
+        <result column="SELL1_AMOUNT" property="sell1Amount" jdbcType="DECIMAL"/>
+        <result column="SELL2_AMOUNT" property="sell2Amount" jdbcType="DECIMAL"/>
+        <result column="SELL3_AMOUNT" property="sell3Amount" jdbcType="DECIMAL"/>
+        <result column="SELL4_AMOUNT" property="sell4Amount" jdbcType="DECIMAL"/>
+        <result column="SELL5_AMOUNT" property="sell5Amount" jdbcType="DECIMAL"/>
+        <result column="ZHANG_DIE" property="zhangDie" jdbcType="DECIMAL"/>
+        <result column="ZHANG_FU_LV" property="zhangFuLv" jdbcType="DECIMAL"/>
+        <result column="HUAN_SHOU_LV" property="huanShouLv" jdbcType="DECIMAL"/>
+        <result column="SHI_YIN_LV" property="shiYinLv" jdbcType="DECIMAL"/>
+        <result column="ZUI_GAO" property="zuiGao" jdbcType="DECIMAL"/>
+        <result column="ZUI_DI" property="zuiDi" jdbcType="DECIMAL"/>
+        <result column="ZHEN_FU" property="zhenFu" jdbcType="DECIMAL"/>
+        <result column="SHI_JIN_LV" property="shiJinLv" jdbcType="DECIMAL"/>
+        <result column="ZHANG_TING_JIA" property="zhangTingJia" jdbcType="DECIMAL"/>
+        <result column="DIE_TING_JIA" property="dieTingJia" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="queryInfoDetail" resultMap="BaseResultMap"
+            parameterType="com.test.sz.TSInfo">
+        select * from T_S_INFO where 1=1
+        <if test="stockCode != null">
+            AND STOCK_CODE = #{stockCode,jdbcType=VARCHAR}
+        </if>
+        <if test="dealedDate != null">
+            AND DEALED_DATE = #{dealedDate,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertByList" parameterType="java.util.List">
+        insert into T_S_INFO (STOCK_CODE, STOCK_NAME, TODAY_PRICE,
+        YESTERDAY_PRICE, DEALED_DATE, JIN_KAI,
+        DEALED_CJE, DEALED_CJL, TOTAL_SHI_ZHI,
+        LIU_TONG_SHI_ZHI, WAI_PAN, NEI_PAN,
+        BUY1, BUY2, BUY3, BUY4,
+        BUY5, BUY1_AMOUNT, BUY2_AMOUNT,
+        BUY3_AMOUNT, BUY4_AMOUNT, BUY5_AMOUNT,
+        SELL1, SELL2, SELL3,
+        SELL4, SELL5, SELL1_AMOUNT,
+        SELL2_AMOUNT, SELL3_AMOUNT, SELL4_AMOUNT,
+        SELL5_AMOUNT, ZHANG_DIE, ZHANG_FU_LV,
+        HUAN_SHOU_LV, SHI_YIN_LV, ZUI_GAO,
+        ZUI_DI, ZHEN_FU, SHI_JIN_LV,
+        ZHANG_TING_JIA, DIE_TING_JIA)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.stockCode,jdbcType=VARCHAR}, #{item.stockName,jdbcType=VARCHAR},
+            #{item.todayPrice,jdbcType=DECIMAL},
+            #{item.yesterdayPrice,jdbcType=DECIMAL}, #{item.dealedDate,jdbcType=VARCHAR},
+            #{item.jinKai,jdbcType=DECIMAL},
+            #{item.dealedCje,jdbcType=DECIMAL}, #{item.dealedCjl,jdbcType=DECIMAL},
+            #{item.totalShiZhi,jdbcType=DECIMAL},
+            #{item.liuTongShiZhi,jdbcType=DECIMAL}, #{item.waiPan,jdbcType=DECIMAL}, #{item.neiPan,jdbcType=DECIMAL},
+            #{item.buy1,jdbcType=DECIMAL}, #{item.buy2,jdbcType=DECIMAL}, #{item.buy3,jdbcType=DECIMAL},
+            #{item.buy4,jdbcType=DECIMAL},
+            #{item.buy5,jdbcType=DECIMAL}, #{item.buy1Amount,jdbcType=DECIMAL}, #{item.buy2Amount,jdbcType=DECIMAL},
+            #{item.buy3Amount,jdbcType=DECIMAL}, #{item.buy4Amount,jdbcType=DECIMAL},
+            #{item.buy5Amount,jdbcType=DECIMAL},
+            #{item.sell1,jdbcType=DECIMAL}, #{item.sell2,jdbcType=DECIMAL}, #{item.sell3,jdbcType=DECIMAL},
+            #{item.sell4,jdbcType=DECIMAL}, #{item.sell5,jdbcType=DECIMAL}, #{item.sell1Amount,jdbcType=DECIMAL},
+            #{item.sell2Amount,jdbcType=DECIMAL}, #{item.sell3Amount,jdbcType=DECIMAL},
+            #{item.sell4Amount,jdbcType=DECIMAL},
+            #{item.sell5Amount,jdbcType=DECIMAL}, #{item.zhangDie,jdbcType=DECIMAL}, #{item.zhangFuLv,jdbcType=DECIMAL},
+            #{item.huanShouLv,jdbcType=DECIMAL}, #{item.shiYinLv,jdbcType=DECIMAL}, #{item.zuiGao,jdbcType=DECIMAL},
+            #{item.zuiDi,jdbcType=DECIMAL}, #{item.zhenFu,jdbcType=DECIMAL}, #{item.shiJinLv,jdbcType=DECIMAL},
+            #{item.zhangTingJia,jdbcType=DECIMAL}, #{item.dieTingJia,jdbcType=DECIMAL})
+        </foreach>
+    </insert>
+</mapper>

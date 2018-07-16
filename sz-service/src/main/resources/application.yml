@@ -1,0 +1,11 @@
+########################################################
+##   与application.properties效果一致，写法不一样
+########################################################
+spring:
+  redis:
+    host: 99.48.236.74
+    port: 6439
+    password: 123456
+mybatis:
+  typeAliasesPackage: com.paxos.sz.model
+  mapperLocations: classpath:mapper/*.xml
