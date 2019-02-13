@@ -82,7 +82,7 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
         if (insertStock.size() > 0) {
             LOGGER.info("BUILD INFO SUCCESSFUL");
             streamProcessService.insertByList(insertStock);
-//            insertOrUpdateDate();
+            insertOrUpdateDate();
             calcTop5();
         }
     }
