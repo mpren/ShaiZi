@@ -82,7 +82,7 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
         if (insertStock.size() > 0) {
             LOGGER.info("BUILD INFO SUCCESSFUL");
             streamProcessService.insertByList(insertStock);
-            insertOrUpdateDate();
+//            insertOrUpdateDate();
             calcTop5();
         }
     }
@@ -101,7 +101,7 @@ public class StreamProcessBusinessImpl implements StreamProcessBusiness {
 
     private void buildInfo(List<TSInfo> insertStock, List<TSInfo> updateStock, StringBuffer sb, TSInfo s1,
                            String[] str) {
-        if (!VALUE.equals(Float.valueOf(str[3]))) {
+        if (!VALUE.equals(Float.valueOf(str[5]))) {
             TSInfo s = new TSInfo();
             s.setDealedDate(str[29].substring(0, 8));
             s.setDetailTime(str[29]);

@@ -79,69 +79,45 @@
     </insert>
     <select id="calcDieFuTop5" resultMap="BaseResultMap"
             parameterType="com.test.sz.model.TSTop5">
-        SELECT
-        d.*, e.STOCK_NAME,
-        e.DEALED_DATE statistic_date
-        FROM
-        (
-        SELECT
-        c.stock_code,
-        count(c.num) continue_days,
-        sum(c.ZHANG_FU_LV) AS die_fu
-        FROM
-        (
-        SELECT
-        a.STOCK_CODE,
-        a.DEALED_DATE,
-        a.ZHANG_FU_LV,
-        a.ZHANG_FU_LV <![CDATA[ <  ]]> 0 AS num
-        FROM
-        (
-				SELECT
-					*
-				FROM
-					T_S_INFO x
-				WHERE
-					x.DEALED_DATE IN (
-						SELECT
-							Z.DEAL_DATE
-						FROM
-							(
-								SELECT
-									Y.DEAL_DATE
-								FROM
-									T_S_DATE Y
-								ORDER BY
-									Y.DEAL_DATE DESC
-								LIMIT 5
-							) AS Z
-					)
-			)  a
-        LEFT JOIN T_S_INFO b ON a.STOCK_CODE = b.STOCK_CODE
+        SELECT d.*, e.STOCK_NAME, e.DEALED_DATE AS statistic_date
+        FROM (
+        SELECT c.stock_code, COUNT(c.num) AS continue_days, SUM(c.ZHANG_FU_LV) AS die_fu
+        FROM (
+        SELECT a.STOCK_CODE, a.DEALED_DATE, a.ZHANG_FU_LV, a.ZHANG_FU_LV <![CDATA[ <  ]]> 0 AS num
+        FROM (
+        SELECT *
+        FROM T_S_INFO x
+        WHERE x.DEALED_DATE IN (
+        SELECT Z.DEAL_DATE
+        FROM (
+        SELECT Y.DEAL_DATE
+        FROM T_S_DATE Y
+        ORDER BY Y.DEAL_DATE DESC
+        LIMIT 5
+        ) Z
+        )
+        ) a
+        LEFT JOIN T_S_INFO b
+        ON a.STOCK_CODE = b.STOCK_CODE
         AND a.DEALED_DATE <![CDATA[ <  ]]> b.DEALED_DATE
-                            GROUP BY
-                            a.STOCK_CODE,
-        a.DEALED_DATE,
-        a.ZHANG_FU_LV
-        HAVING
-        count(b.DEALED_DATE) <![CDATA[ <=  ]]> 5
-        ORDER BY
-        a.STOCK_CODE,
-        a.DEALED_DATE DESC
+                            GROUP BY a.STOCK_CODE, a.DEALED_DATE, a.ZHANG_FU_LV
+        HAVING COUNT(b.DEALED_DATE) <![CDATA[ <=  ]]> 5
+        ORDER BY a.STOCK_CODE, a.DEALED_DATE DESC
         ) c
-        GROUP BY
-        c.STOCK_CODE,
-        c.num
-        ORDER BY
-        continue_days DESC,
-        die_fu ASC
+        GROUP BY c.STOCK_CODE, c.num
+        HAVING SUM(c.ZHANG_FU_LV) <![CDATA[ <  ]]> 0
+        ORDER BY continue_days DESC, die_fu ASC
         LIMIT 5
         ) d
-        LEFT JOIN T_S_INFO e ON d.stock_code = e.STOCK_CODE
-        ORDER BY
-        e.DEALED_DATE DESC,
-        d.die_fu ASC
-        LIMIT 5
+        LEFT JOIN T_S_INFO e
+        ON d.stock_code = e.STOCK_CODE
+        AND e.DEALED_DATE = (
+        SELECT Y.DEAL_DATE
+        FROM T_S_DATE Y
+        ORDER BY Y.DEAL_DATE DESC
+        LIMIT 1
+        )
+        ORDER BY d.continue_days DESC, e.DEALED_DATE DESC, d.die_fu ASC
     </select>
     <select id="queryDieFuTop5" resultMap="BaseResultMap"
             parameterType="com.test.sz.model.TSTop5">
