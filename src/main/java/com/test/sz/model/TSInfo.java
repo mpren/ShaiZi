@@ -3,8 +3,6 @@ package com.test.sz.model;
 import java.math.BigDecimal;
 
 public class TSInfo {
-	
-	private static final long serialVersionUID = -4089678289591260155L;
 
 	private String stockCode;
 
